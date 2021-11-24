@@ -52,7 +52,32 @@ passwordStrengthMeter.setShowStrengthLabel(true);
 ```
 
 ### Override Settings:
+```java
+meter.setPasswordStrengthCalculator(new PasswordStrengthCalculator() {
+    @Override
+    public int calculatePasswordSecurityLevel(String password) {
+        // Do some calculation and return an int corresponding to the "points" or "level" the user password got
+        return points;
+    }
 
+    @Override
+    public int getMinimumLength() {
+        // Define the minimum length of a password. Anything below this should always yield a score of 0
+        return 8;
+    }
+
+    @Override
+    public boolean passwordAccepted(int level) {
+        // Define whether or not the level is an accepted level or not.
+        return level > 3;
+    }
+
+    @Override
+    public void onPasswordAccepted(String password) {
+        // Called when the password entered meets your requirements of length and strength levels
+    }
+});
+```
 
 
 # Source

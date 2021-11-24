@@ -12,7 +12,7 @@ import nu.aaro.gustav.passwordstrengthmeter.PasswordStrengthMeter;
 
 public class MainActivity extends AppCompatActivity {
     private PasswordStrengthMeter _passwordStrengthMeter;
-
+    private Button _btnSignup;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -20,7 +20,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         configurePasswordMeter();
-        configureCustomizationButton();
+        configureButtons();
     }
 
     private void configurePasswordMeter() {
@@ -32,23 +32,23 @@ public class MainActivity extends AppCompatActivity {
         _passwordStrengthMeter.setEditText(etPassword);
     }
 
-    private void configureCustomizationButton() {
+    private void configureButtons() {
+        _btnSignup = findViewById(R.id.btnSignup);
         Button btnCustomize = findViewById(R.id.btnCustomize);
-
         btnCustomize.setOnClickListener(view -> {
             customizeMeter();
         });
     }
 
     private void customizeMeter() {
-        _passwordStrengthMeter.setAnimationDuration(8000);
+        _passwordStrengthMeter.setAnimationDuration(3000);
         _passwordStrengthMeter.setShowStrengthIndicator(true);
         _passwordStrengthMeter.setShowStrengthLabel(false);
 
         _passwordStrengthMeter.setPasswordStrengthCalculator(new PasswordStrengthCalculator() {
             @Override
             public int calculatePasswordSecurityLevel(String password) {
-
+                _btnSignup.setEnabled(false);
                 int strengthTotal = 0;
 
                 if(password.length() >= getMinimumLength()){
@@ -80,15 +80,10 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             public void onPasswordAccepted(String password) {
-                Toast.makeText(MainActivity.this, "Password is strong 💪", Toast.LENGTH_SHORT).show();
-                enableSignupButton();
+                _btnSignup.setEnabled(true);
             }
         });
 
         Toast.makeText(this, "Customizations On", Toast.LENGTH_SHORT).show();
-    }
-
-    private void enableSignupButton() {
-
     }
 }
