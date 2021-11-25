@@ -49,23 +49,23 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public int calculatePasswordSecurityLevel(String password) {
                 _btnSignup.setEnabled(false);
-                int strengthTotal = 0;
+                int level = 0;
 
                 if(password.length() >= getMinimumLength()){
-                    strengthTotal += 1;
+                    level += 1;
                     // Contains the word "hi"
-                    strengthTotal += password.contains("hi") ? 1 : 0;
+                    level += password.contains("hi") ? 1 : 0;
 
                     // Contains the word "class"
-                    strengthTotal += password.contains("class") ? 1 : 0;
+                    level += password.contains("class") ? 1 : 0;
 
                     // Contains a smiley face :)
-                    strengthTotal += password.contains(":)") ? 1 : 0;
+                    level += password.contains(":)") ? 1 : 0;
 
                     // Is at least 8 characters long
-                    strengthTotal += password.length() > 7 ? 1 : 0;
+                    level += password.length() > 7 ? 1 : 0;
                 }
-                return strengthTotal;
+                return level;
             }
 
             @Override
